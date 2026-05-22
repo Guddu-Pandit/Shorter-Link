@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
+  fetchLinks,
+  getSessionId,
   isValidUrl,
-  loadLinks,
-  saveLinks,
   shortenUrl,
   type ShortLink,
 } from "@/lib/shortly";
@@ -13,17 +13,29 @@ export function ShortenSection() {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
   const [links, setLinks] = useState<ShortLink[]>([]);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState("");
 
+  // Initialise session & load existing links from Supabase
   useEffect(() => {
-    setLinks(loadLinks());
+    const sid = getSessionId();
+    setSessionId(sid);
+
+    if (sid) {
+      fetchLinks(sid)
+        .then(setLinks)
+        .catch((err) => console.error("Failed to load links:", err));
+    }
   }, []);
 
-  const persist = useCallback((next: ShortLink[]) => {
-    setLinks(next);
-    saveLinks(next);
-  }, []);
+  const buildShortUrl = useCallback(
+    (code: string) => {
+      if (typeof window === "undefined") return code;
+      return `${window.location.origin}/${code}`;
+    },
+    [],
+  );
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,13 +53,8 @@ export function ShortenSection() {
 
     setLoading(true);
     try {
-      const short = await shortenUrl(trimmed);
-      const entry: ShortLink = {
-        id: crypto.randomUUID(),
-        original: trimmed,
-        short,
-      };
-      persist([entry, ...links]);
+      const entry = await shortenUrl(trimmed, sessionId);
+      setLinks((prev) => [entry, ...prev]);
       setUrl("");
     } catch {
       setError("Something went wrong. Please try again.");
@@ -56,8 +63,8 @@ export function ShortenSection() {
     }
   }
 
-  async function handleCopy(id: string, short: string) {
-    await navigator.clipboard.writeText(short);
+  async function handleCopy(id: number, code: string) {
+    await navigator.clipboard.writeText(buildShortUrl(code));
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   }
@@ -108,20 +115,23 @@ export function ShortenSection() {
                 className="flex flex-col gap-4 rounded-md bg-white px-6 py-4 md:flex-row md:items-center md:justify-between md:gap-8 md:py-5"
               >
                 <p className="truncate border-b border-shortly-light-grayish-blue pb-4 text-sm font-medium text-shortly-dark-violet md:max-w-[50%] md:border-b-0 md:pb-0">
-                  {link.original}
+                  {link.original_url}
                 </p>
                 <div className="flex shrink-0 items-center justify-between gap-4 md:justify-end">
+                  <span className="hidden text-xs text-shortly-grayish-violet md:inline">
+                    {link.clicks} click{link.clicks !== 1 ? "s" : ""}
+                  </span>
                   <a
-                    href={link.short}
+                    href={buildShortUrl(link.code)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="truncate text-sm font-medium text-shortly-cyan hover:underline"
                   >
-                    {link.short}
+                    {buildShortUrl(link.code)}
                   </a>
                   <button
                     type="button"
-                    onClick={() => handleCopy(link.id, link.short)}
+                    onClick={() => handleCopy(link.id, link.code)}
                     className={`shrink-0 rounded-md px-6 py-2 text-sm font-bold text-white transition-colors ${
                       copiedId === link.id
                         ? "bg-shortly-dark-violet"

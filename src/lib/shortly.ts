@@ -1,24 +1,10 @@
 export type ShortLink = {
-  id: string;
-  original: string;
-  short: string;
+  id: number;
+  code: string;
+  original_url: string;
+  clicks: number;
+  created_at: string;
 };
-
-const STORAGE_KEY = "shortly-links";
-
-export function loadLinks(): ShortLink[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as ShortLink[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-export function saveLinks(links: ShortLink[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
-}
 
 export function isValidUrl(value: string): boolean {
   try {
@@ -29,13 +15,42 @@ export function isValidUrl(value: string): boolean {
   }
 }
 
-export async function shortenUrl(url: string): Promise<string> {
-  const res = await fetch(
-    `https://api.shrtco.de/v2/shorten?url=${encodeURIComponent(url)}`,
-  );
+const SESSION_KEY = "shortly-session-id";
+
+/** Get or create a persistent anonymous session ID */
+export function getSessionId(): string {
+  if (typeof window === "undefined") return "";
+  let id = localStorage.getItem(SESSION_KEY);
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem(SESSION_KEY, id);
+  }
+  return id;
+}
+
+/** Shorten a URL via our API */
+export async function shortenUrl(
+  url: string,
+  sessionId: string,
+): Promise<ShortLink> {
+  const res = await fetch("/api/shorten", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url, sessionId }),
+  });
   const data = await res.json();
-  if (!res.ok || data.ok === false) {
+  if (!res.ok) {
     throw new Error(data.error ?? "Something went wrong");
   }
-  return data.result.full_short_link as string;
+  return data as ShortLink;
+}
+
+/** Fetch all links for the current session */
+export async function fetchLinks(sessionId: string): Promise<ShortLink[]> {
+  const res = await fetch(`/api/links?sessionId=${encodeURIComponent(sessionId)}`);
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error ?? "Failed to load links");
+  }
+  return data.links as ShortLink[];
 }
