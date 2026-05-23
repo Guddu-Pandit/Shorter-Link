@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shortly - Link Shorter Application
 
-## Getting Started
+Shortly is a modern, responsive URL shortening web application. It allows users to quickly shorten long URLs, track link clicks, manage their shortened history, and delete unwanted links securely. All links are associated with a persistent, anonymous session, ensuring users see their own history without requiring an account.
 
-First, run the development server:
+## Features
+
+- URL Shortening: Instantly shorten long URLs with a unique, randomized slug.
+- Click Tracking: Automatically tracks the number of times each shortened link is visited.
+- Session Management: Stores link history per browser session using local storage.
+- Delete Links: Allows users to delete individual links from both the interface and the database.
+- Modern Responsive Design: Built with elegant hover state styling and modern responsive grids.
+
+## Tech Stack
+
+- Framework: Next.js (App Router with Turbopack)
+- Styling: Tailwind CSS
+- Database: Supabase (PostgreSQL)
+- Languages: TypeScript, JavaScript
+- Icons: Lucide React
+
+## Setup and Installation
+
+### 1. Clone the repository and install dependencies
+
+Ensure you have Node.js installed, then run:
+
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env` file in the root of the project (copying from `.env.example`) and configure the following variables:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+```
+
+## Running the Application
+
+To start the development server locally, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- GET `/api/links?sessionId=<session-id>`: Retrieves shortened links associated with the provided session ID.
+- POST `/api/shorten`: Accepts a JSON body containing `url` and `sessionId` to generate and save a shortened link.
+- DELETE `/api/links?id=<link-id>&sessionId=<session-id>`: Deletes the specified shortened link.
+- GET `/[code]`: Redirects the short slug to the original destination URL and increments the click count.
