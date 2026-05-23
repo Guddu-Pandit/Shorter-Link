@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Trash2 } from "lucide-react";
 import {
+  deleteLink,
   fetchLinks,
   getSessionId,
   isValidUrl,
@@ -14,6 +16,7 @@ export function ShortenSection() {
   const [error, setError] = useState("");
   const [links, setLinks] = useState<ShortLink[]>([]);
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState("");
 
@@ -69,6 +72,19 @@ export function ShortenSection() {
     setTimeout(() => setCopiedId(null), 2000);
   }
 
+  async function handleDelete(id: number) {
+    setDeletingId(id);
+    try {
+      await deleteLink(id, sessionId);
+      setLinks((prev) => prev.filter((link) => link.id !== id));
+    } catch (err) {
+      console.error("Failed to delete link:", err);
+      setError("Failed to delete link. Please try again.");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   return (
     <section
       id="shorten"
@@ -88,7 +104,7 @@ export function ShortenSection() {
                 if (error) setError("");
               }}
               placeholder="Shorten a link here..."
-              className={`w-full rounded-md px-4 py-4 text-base text-shortly-dark-violet placeholder:text-shortly-grayish-violet focus:outline-none md:py-5 md:pr-4 ${
+              className={`w-full rounded-md bg-white px-4 py-4 text-base text-shortly-dark-violet placeholder:text-shortly-grayish-violet focus:outline-none md:py-5 md:pr-4 ${
                 error ? "border-2 border-shortly-red" : "border-0"
               }`}
             />
@@ -139,6 +155,15 @@ export function ShortenSection() {
                     }`}
                   >
                     {copiedId === link.id ? "Copied!" : "Copy"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(link.id)}
+                    disabled={deletingId === link.id}
+                    title="Delete link"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-red-200 bg-red-50 text-red-500 transition-all hover:bg-red-500 hover:text-white hover:scale-105 active:scale-95 disabled:opacity-50"
+                  >
+                    <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
               </li>

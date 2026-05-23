@@ -27,3 +27,32 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({ links: data });
 }
+
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  const sessionId = searchParams.get("sessionId");
+
+  if (!id || !sessionId) {
+    return NextResponse.json(
+      { error: "id and sessionId are required." },
+      { status: 400 },
+    );
+  }
+
+  const { error } = await getSupabase()
+    .from("links")
+    .delete()
+    .eq("id", id)
+    .eq("session_id", sessionId);
+
+  if (error) {
+    console.error("Supabase delete error:", error);
+    return NextResponse.json(
+      { error: "Failed to delete link." },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ success: true });
+}

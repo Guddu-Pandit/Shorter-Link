@@ -54,3 +54,21 @@ export async function fetchLinks(sessionId: string): Promise<ShortLink[]> {
   }
   return data.links as ShortLink[];
 }
+
+/** Delete a shortened link */
+export async function deleteLink(
+  id: number,
+  sessionId: string,
+): Promise<void> {
+  const res = await fetch(
+    `/api/links?id=${id}&sessionId=${encodeURIComponent(sessionId)}`,
+    {
+      method: "DELETE",
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error ?? "Failed to delete link");
+  }
+}
+
