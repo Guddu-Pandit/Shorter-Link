@@ -57,7 +57,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#f0f1f6] px-4 py-12 overflow-hidden">
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#f0f1f6] p-6 lg:p-12 overflow-hidden">
       {/* Background Decorative Blobs */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-shortly-cyan/20 blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-shortly-dark-violet/10 blur-3xl" />
@@ -65,119 +65,133 @@ export default function SignupPage() {
       {/* Back to Home Link */}
       <Link
         href="/"
-        className="absolute top-6 left-6 inline-flex items-center gap-2 text-sm font-medium text-shortly-grayish-violet hover:text-shortly-dark-violet transition-colors group"
+        className="absolute top-6 left-6 inline-flex items-center gap-2 text-sm font-medium text-shortly-grayish-violet hover:text-shortly-dark-violet transition-colors group z-20"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
         Back to Home
       </Link>
 
-      <div className="w-full max-w-md z-10">
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-block text-3xl font-bold tracking-tight text-shortly-dark-violet">
-            Shortly<span className="text-shortly-cyan">.</span>
-          </Link>
-          <p className="mt-2 text-sm text-shortly-grayish-violet">
-            The premium URL shortening experience
-          </p>
+      <div className="w-full max-w-[69.375rem] mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-24 z-10">
+        
+        {/* Left Form Side */}
+        <div className="w-full max-w-md shrink-0">
+          <div className="text-left mb-8">
+            <Link href="/" className="inline-block text-3xl font-bold tracking-tight text-shortly-dark-violet">
+              Shortly<span className="text-shortly-cyan">.</span>
+            </Link>
+            <p className="mt-2 text-sm text-shortly-grayish-violet">
+              The premium URL shortening experience
+            </p>
+          </div>
+
+          <Card className="border-0 bg-white shadow-xl shadow-shortly-dark-violet/5 rounded-xl">
+            <CardHeader className="space-y-1 pb-4">
+              <CardTitle className="text-2xl font-bold text-shortly-dark-violet">Create an Account</CardTitle>
+              <CardDescription className="text-shortly-grayish-violet text-xs">
+                Start shortening, tracking clicks, and upgrading
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                  <div className="p-3 text-xs font-semibold rounded-lg bg-shortly-red/10 border border-shortly-red/20 text-shortly-red animate-shake">
+                    {error}
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-shortly-dark-violet text-xs font-bold">
+                    Full Name
+                  </Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-shortly-grayish-violet" />
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="John Doe"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
+                      disabled={loading}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-shortly-dark-violet text-xs font-bold">
+                    Email Address
+                  </Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-shortly-grayish-violet" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="name@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
+                      disabled={loading}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-shortly-dark-violet text-xs font-bold">
+                    Password
+                  </Label>
+                  <div className="relative">
+                    <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-shortly-grayish-violet" />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="•••••••• (min 6 characters)"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
+                      disabled={loading}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full mt-4 h-11 font-bold bg-shortly-cyan hover:bg-shortly-cyan-hover text-white rounded-lg transition-all duration-300 shadow-[0_4px_14px_rgba(42,207,207,0.3)] active:translate-y-px"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Creating Account...
+                    </span>
+                  ) : (
+                    "Create Account"
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+            <CardFooter className="flex flex-col space-y-2 border-t border-gray-100 pt-4">
+              <p className="text-xs text-shortly-grayish-violet">
+                Already have an account?{" "}
+                <Link href="/login" className="text-shortly-cyan hover:underline font-bold transition-colors">
+                  Sign In
+                </Link>
+              </p>
+            </CardFooter>
+          </Card>
         </div>
 
-        <Card className="border-0 bg-white shadow-xl shadow-shortly-dark-violet/5 rounded-xl">
-          <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-2xl font-bold text-shortly-dark-violet text-center">Create an Account</CardTitle>
-            <CardDescription className="text-shortly-grayish-violet text-center text-xs">
-              Start shortening, tracking clicks, and upgrading
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="p-3 text-xs font-semibold rounded-lg bg-shortly-red/10 border border-shortly-red/20 text-shortly-red text-center animate-shake">
-                  {error}
-                </div>
-              )}
+        {/* Right Illustration Side */}
+        <div className="w-full max-w-[400px] lg:max-w-none lg:flex-1 hidden md:flex justify-center lg:justify-end pr-0 lg:-mr-32 pointer-events-none select-none">
+          <img 
+            src="/illustration-working.svg" 
+            alt="Person working on computer" 
+            className="w-[120%] lg:w-[130%] h-auto object-contain max-w-none"
+          />
+        </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-shortly-dark-violet text-xs font-bold">
-                  Full Name
-                </Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-shortly-grayish-violet" />
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="John Doe"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
-                    disabled={loading}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-shortly-dark-violet text-xs font-bold">
-                  Email Address
-                </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-shortly-grayish-violet" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
-                    disabled={loading}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-shortly-dark-violet text-xs font-bold">
-                  Password
-                </Label>
-                <div className="relative">
-                  <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-shortly-grayish-violet" />
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="•••••••• (min 6 characters)"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
-                    disabled={loading}
-                    required
-                  />
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full mt-4 h-11 font-bold bg-shortly-cyan hover:bg-shortly-cyan-hover text-white rounded-lg transition-all duration-300 shadow-lg shadow-shortly-cyan/20 active:translate-y-px"
-              >
-                {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Creating Account...
-                  </span>
-                ) : (
-                  "Create Account"
-                )}
-              </Button>
-            </form>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-2 border-t border-gray-100 pt-4">
-            <p className="text-xs text-shortly-grayish-violet text-center">
-              Already have an account?{" "}
-              <Link href="/login" className="text-shortly-cyan hover:underline font-bold transition-colors">
-                Sign In
-              </Link>
-            </p>
-          </CardFooter>
-        </Card>
       </div>
     </div>
   );
