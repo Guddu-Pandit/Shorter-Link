@@ -33,13 +33,13 @@ export function Header() {
 
         <div className="hidden items-center gap-8 md:flex">
           <Link
-            href="#"
+            href="/login"
             className="text-[0.9375rem] font-medium text-shortly-grayish-violet transition-colors hover:text-shortly-cyan"
           >
             Login
           </Link>
           <Link
-            href="#"
+            href="/signup"
             className="rounded-full bg-shortly-cyan px-6 py-2 text-[0.9375rem] font-bold text-white transition-colors hover:bg-shortly-cyan-hover"
           >
             Sign Up
@@ -71,14 +71,14 @@ export function Header() {
             ))}
             <hr className="border-shortly-grayish-violet/30" />
             <Link
-              href="#"
+              href="/login"
               className="text-lg font-bold text-white"
               onClick={() => setOpen(false)}
             >
               Login
             </Link>
             <Link
-              href="#"
+              href="/signup"
               className="rounded-full bg-shortly-cyan px-6 py-3 text-lg font-bold text-white"
               onClick={() => setOpen(false)}
             >
