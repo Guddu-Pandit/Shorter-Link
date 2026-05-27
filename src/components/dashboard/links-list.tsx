@@ -89,11 +89,11 @@ export function LinksList({ refreshTrigger }: { refreshTrigger: number }) {
 
   if (links.length === 0) {
     return (
-      <div className="bg-white/5 border border-white/10 rounded-xl p-12 text-center flex flex-col items-center">
-        <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+      <div className="bg-white border-0 shadow-sm rounded-xl p-12 text-center flex flex-col items-center">
+        <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
           <ExternalLink className="w-8 h-8 text-shortly-grayish-violet" />
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">No links yet</h3>
+        <h3 className="text-xl font-bold text-shortly-dark-violet mb-2">No links yet</h3>
         <p className="text-shortly-grayish-violet max-w-md">
           You haven't shortened any links yet. Use the form above to create your first short link!
         </p>
@@ -103,9 +103,9 @@ export function LinksList({ refreshTrigger }: { refreshTrigger: number }) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-bold text-white flex items-center justify-between">
+      <h3 className="text-lg font-bold text-shortly-dark-violet flex items-center justify-between">
         Your Links
-        <span className="text-xs font-medium bg-white/10 px-2.5 py-1 rounded-full text-shortly-grayish-violet">
+        <span className="text-xs font-medium bg-shortly-gray/20 px-2.5 py-1 rounded-full text-shortly-dark-violet">
           {links.length} Total
         </span>
       </h3>
@@ -114,7 +114,7 @@ export function LinksList({ refreshTrigger }: { refreshTrigger: number }) {
         {links.map((link) => (
           <div
             key={link.id}
-            className="group bg-white/5 border border-white/10 hover:border-shortly-cyan/50 rounded-xl p-4 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            className="group bg-white border-0 shadow-sm hover:shadow-md rounded-xl p-4 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
@@ -129,7 +129,7 @@ export function LinksList({ refreshTrigger }: { refreshTrigger: number }) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="w-8 h-8 text-shortly-grayish-violet hover:text-white shrink-0"
+                  className="w-8 h-8 text-shortly-grayish-violet hover:text-shortly-dark-violet shrink-0"
                   onClick={() => copyToClipboard(link.code, link.id)}
                 >
                   {copiedId === link.id ? (
@@ -139,18 +139,18 @@ export function LinksList({ refreshTrigger }: { refreshTrigger: number }) {
                   )}
                 </Button>
               </div>
-              <p className="text-sm text-shortly-grayish-violet truncate" title={link.original_url}>
+              <p className="text-sm text-shortly-dark-violet truncate" title={link.original_url}>
                 {link.original_url}
               </p>
             </div>
 
-            <div className="flex items-center gap-4 sm:gap-6 pt-3 sm:pt-0 border-t border-white/5 sm:border-0 mt-3 sm:mt-0">
-              <div className="flex items-center gap-1.5 text-xs font-medium text-white/80">
-                <Calendar className="w-3.5 h-3.5 text-shortly-grayish-violet" />
+            <div className="flex items-center gap-4 sm:gap-6 pt-3 sm:pt-0 border-t border-gray-100 sm:border-0 mt-3 sm:mt-0">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-shortly-grayish-violet">
+                <Calendar className="w-3.5 h-3.5" />
                 {formatDate(link.created_at)}
               </div>
-              <div className="flex items-center gap-1.5 text-xs font-medium text-white/80">
-                <MousePointerClick className="w-3.5 h-3.5 text-shortly-cyan" />
+              <div className="flex items-center gap-1.5 text-xs font-medium text-shortly-grayish-violet">
+                <MousePointerClick className="w-3.5 h-3.5" />
                 {link.clicks} clicks
               </div>
               <Button

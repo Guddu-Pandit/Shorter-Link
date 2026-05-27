@@ -14,7 +14,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-shortly-dark-violet mb-2">Dashboard</h1>
         <p className="text-shortly-grayish-violet">
           Manage your shortened links and track performance.
         </p>

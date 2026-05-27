@@ -29,12 +29,12 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 h-screen bg-white/5 border-r border-white/10 flex flex-col justify-between p-4 flex-shrink-0 relative overflow-hidden backdrop-blur-sm">
+    <aside className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col justify-between p-4 flex-shrink-0 relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-32 bg-shortly-cyan/5 blur-2xl rounded-full" />
       
       <div className="z-10">
-        <Link href="/" className="inline-block text-2xl font-bold tracking-tight text-white mb-8 pl-2">
+        <Link href="/" className="inline-block text-2xl font-bold tracking-tight text-shortly-dark-violet mb-8 pl-2">
           Shortly<span className="text-shortly-cyan">.</span>
         </Link>
 
@@ -47,8 +47,8 @@ export function Sidebar() {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-300 font-medium ${
                   isActive
-                    ? "bg-shortly-cyan/20 text-white shadow-[0_0_15px_rgba(42,207,207,0.15)] border border-shortly-cyan/20"
-                    : "text-shortly-grayish-violet hover:bg-white/5 hover:text-white"
+                    ? "bg-shortly-cyan/10 text-shortly-cyan font-bold"
+                    : "text-shortly-grayish-violet hover:bg-gray-50 hover:text-shortly-dark-violet"
                 }`}
               >
                 <item.icon className={`w-5 h-5 ${isActive ? "text-shortly-cyan" : "text-shortly-grayish-violet"}`} />
@@ -60,7 +60,7 @@ export function Sidebar() {
       </div>
 
       <div className="z-10 space-y-4">
-        <div className="bg-gradient-to-br from-shortly-dark-violet to-shortly-very-dark-violet p-4 rounded-xl border border-white/10 shadow-lg relative overflow-hidden group">
+        <div className="bg-shortly-dark-violet p-4 rounded-xl shadow-lg relative overflow-hidden group">
           <div className="absolute inset-0 bg-shortly-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <h4 className="text-white text-sm font-bold mb-1 flex items-center gap-2">
             Premium Plan

@@ -66,8 +66,8 @@ export function ShortenForm({ onLinkAdded }: { onLinkAdded?: () => void }) {
   };
 
   return (
-    <Card className="bg-white/5 border-white/10 shadow-xl overflow-hidden relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-shortly-cyan/5 to-transparent pointer-events-none" />
+    <Card className="bg-shortly-dark-violet border-0 shadow-xl overflow-hidden relative">
+      <div className="absolute inset-0 bg-shortly-cyan/5 pointer-events-none" />
       <CardContent className="p-6">
         <div className="flex flex-col gap-4">
           <div className="space-y-1">
@@ -89,13 +89,13 @@ export function ShortenForm({ onLinkAdded }: { onLinkAdded?: () => void }) {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 disabled={loading || limitReached}
-                className="w-full h-14 pl-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-shortly-grayish-violet focus-visible:ring-shortly-cyan focus-visible:border-shortly-cyan transition-all text-base rounded-xl"
+                className="w-full h-14 pl-12 pr-4 bg-white border-0 text-shortly-dark-violet placeholder:text-shortly-grayish-violet focus-visible:ring-shortly-cyan focus-visible:border-shortly-cyan transition-all text-base rounded-xl"
               />
             </div>
             <Button
               type="submit"
               disabled={loading || limitReached}
-              className="h-14 px-8 font-bold bg-shortly-cyan hover:bg-shortly-cyan/90 text-white rounded-xl shadow-[0_4px_14px_rgba(42,207,207,0.3)] transition-transform active:scale-95 whitespace-nowrap"
+              className="h-14 px-8 font-bold bg-shortly-cyan hover:bg-shortly-cyan-hover text-white rounded-xl transition-transform active:scale-95 whitespace-nowrap"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Shorten"}
             </Button>

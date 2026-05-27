@@ -57,15 +57,15 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-shortly-very-dark-violet bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-shortly-dark-violet via-shortly-very-dark-violet to-black px-4 py-12 overflow-hidden">
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#f0f1f6] px-4 py-12 overflow-hidden">
       {/* Background Decorative Blobs */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-shortly-cyan/10 blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-shortly-dark-violet/20 blur-3xl" />
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-shortly-cyan/20 blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-shortly-dark-violet/10 blur-3xl" />
 
       {/* Back to Home Link */}
       <Link
         href="/"
-        className="absolute top-6 left-6 inline-flex items-center gap-2 text-sm font-medium text-shortly-grayish-violet hover:text-white transition-colors group"
+        className="absolute top-6 left-6 inline-flex items-center gap-2 text-sm font-medium text-shortly-grayish-violet hover:text-shortly-dark-violet transition-colors group"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
         Back to Home
@@ -73,7 +73,7 @@ export default function SignupPage() {
 
       <div className="w-full max-w-md z-10">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block text-3xl font-bold tracking-tight text-white">
+          <Link href="/" className="inline-block text-3xl font-bold tracking-tight text-shortly-dark-violet">
             Shortly<span className="text-shortly-cyan">.</span>
           </Link>
           <p className="mt-2 text-sm text-shortly-grayish-violet">
@@ -81,9 +81,9 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <Card className="border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
+        <Card className="border-0 bg-white shadow-xl shadow-shortly-dark-violet/5 rounded-xl">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-2xl font-bold text-white text-center">Create an Account</CardTitle>
+            <CardTitle className="text-2xl font-bold text-shortly-dark-violet text-center">Create an Account</CardTitle>
             <CardDescription className="text-shortly-grayish-violet text-center text-xs">
               Start shortening, tracking clicks, and upgrading
             </CardDescription>
@@ -97,7 +97,7 @@ export default function SignupPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-white text-xs font-semibold">
+                <Label htmlFor="name" className="text-shortly-dark-violet text-xs font-bold">
                   Full Name
                 </Label>
                 <div className="relative">
@@ -108,7 +108,7 @@ export default function SignupPage() {
                     placeholder="John Doe"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-shortly-grayish-violet/50"
+                    className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
                     disabled={loading}
                     required
                   />
@@ -116,7 +116,7 @@ export default function SignupPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white text-xs font-semibold">
+                <Label htmlFor="email" className="text-shortly-dark-violet text-xs font-bold">
                   Email Address
                 </Label>
                 <div className="relative">
@@ -127,7 +127,7 @@ export default function SignupPage() {
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-shortly-grayish-violet/50"
+                    className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
                     disabled={loading}
                     required
                   />
@@ -135,7 +135,7 @@ export default function SignupPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-white text-xs font-semibold">
+                <Label htmlFor="password" className="text-shortly-dark-violet text-xs font-bold">
                   Password
                 </Label>
                 <div className="relative">
@@ -146,7 +146,7 @@ export default function SignupPage() {
                     placeholder="•••••••• (min 6 characters)"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-shortly-grayish-violet/50"
+                    className="pl-10 bg-transparent border-gray-200 text-shortly-dark-violet placeholder:text-shortly-grayish-violet/50 focus-visible:ring-shortly-cyan"
                     disabled={loading}
                     required
                   />
@@ -156,7 +156,7 @@ export default function SignupPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-4 h-10 font-bold bg-shortly-cyan hover:bg-shortly-cyan/90 text-white rounded-lg transition-all duration-300 shadow-lg shadow-shortly-cyan/20 active:translate-y-px"
+                className="w-full mt-4 h-11 font-bold bg-shortly-cyan hover:bg-shortly-cyan-hover text-white rounded-lg transition-all duration-300 shadow-lg shadow-shortly-cyan/20 active:translate-y-px"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -169,7 +169,7 @@ export default function SignupPage() {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-2 border-t border-white/5 pt-4">
+          <CardFooter className="flex flex-col space-y-2 border-t border-gray-100 pt-4">
             <p className="text-xs text-shortly-grayish-violet text-center">
               Already have an account?{" "}
               <Link href="/login" className="text-shortly-cyan hover:underline font-bold transition-colors">
