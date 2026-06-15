@@ -10,7 +10,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Shortly | URL Shortener",
-  description:
+  description:  
     "Build your brand's recognition and get detailed insights on how your links are performing.",
 };
 

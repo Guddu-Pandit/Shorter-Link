@@ -21,7 +21,7 @@
   color: var(--color-text-primary);
   display: grid;
   grid-template-columns: 200px 1fr;
-  min-height: 100vh;
+  height: 100vh;
   border: 0.5px solid var(--color-border-tertiary);
   border-radius: 0;
   overflow: hidden;
