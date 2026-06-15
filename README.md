@@ -53,3 +53,6 @@ Open http://localhost:3000 in your browser to view the application.
 - POST `/api/shorten`: Accepts a JSON body containing `url` and `sessionId` to generate and save a shortened link.
 - DELETE `/api/links?id=<link-id>&sessionId=<session-id>`: Deletes the specified shortened link.
 - GET `/[code]`: Redirects the short slug to the original destination URL and increments the click count.
+
+---
+Made by Guddu Pandit
